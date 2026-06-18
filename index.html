@@ -25,7 +25,7 @@
     </header>
 
     <nav class="max-w-6xl mx-auto px-4 mt-8 flex flex-wrap gap-2 justify-center md:justify-start">
-        <button onclick="filterCategory(event, 'all')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white cursor-pointer transition-all">All Fields</button>
+        <button id="btn-all" onclick="filterCategory(event, 'all')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white cursor-pointer transition-all">All Fields</button>
         <button onclick="filterCategory(event, 'experience')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Professional Experience</button>
         <button onclick="filterCategory(event, 'projects')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Technical Projects</button>
         <button onclick="filterCategory(event, 'certifications')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Certifications</button>
@@ -46,7 +46,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             fetch('portfolio.xml')
                 .then(response => {
-                    if (!response.ok) throw new Error("portfolio.xml not found");
+                    if (!response.ok) throw new Error("portfolio.xml not found on the server.");
                     return response.text();
                 })
                 .then(str => {
@@ -59,33 +59,49 @@
                         return el ? el.textContent : '';
                     };
 
-                    // Extract Global Parameters
-                    document.getElementById('portfolio-title').textContent = getTagText(xmlDoc, 'title');
-                    document.getElementById('portfolio-subtitle').textContent = getTagText(xmlDoc, 'subtitle');
+                    // Extract Global Parameters safely
+                    document.getElementById('portfolio-title').textContent = getTagText(xmlDoc, 'title') || "Engineering Portfolio";
+                    document.getElementById('portfolio-subtitle').textContent = getTagText(xmlDoc, 'subtitle') || "";
                     
                     const logoUrl = getTagText(xmlDoc, 'logo');
                     if(logoUrl) {
                         const img = document.getElementById('portfolio-logo');
-                        img.src = logoUrl; img.classList.remove('hidden');
+                        img.src = logoUrl; 
+                        img.classList.remove('hidden');
                     }
 
-                    // Map Header Links from Custom Target Nodes
+                    // Extract Header Links from Custom Extension Nodes safely
                     const linkedin = getTagText(xmlDoc, 'icon');
                     const github = getTagText(xmlDoc, 'rights');
                     const cv = getTagText(xmlDoc, 'generator');
-                    const prefix = getTagText(xmlDoc, 'title') ? xmlDoc.getElementsByTagNameNS(ns, 'link')[0].getAttribute('href').replace('portfolio.xml','') : '';
+                    
+                    // Robust prefix determination by looking for rel="self"
+                    let prefix = '';
+                    const feedLinks = xmlDoc.getElementsByTagNameNS(ns, 'link');
+                    for (let l of feedLinks) {
+                        if (l.getAttribute('rel') === 'self') {
+                            prefix = l.getAttribute('href').replace('portfolio.xml', '');
+                            break;
+                        }
+                    }
 
                     if(linkedin) { const a = document.getElementById('lnk-linkedin'); a.href = linkedin; a.classList.remove('hidden'); }
                     if(github) { const a = document.getElementById('lnk-github'); a.href = github; a.classList.remove('hidden'); }
-                    if(cv) { const a = document.getElementById('lnk-cv'); a.href = cv.startsWith('/') ? prefix + cv : cv; a.classList.remove('hidden'); }
+                    if(cv) { 
+                        const a = document.getElementById('lnk-cv'); 
+                        let fullCvUrl = cv.startsWith('/') ? prefix + cv : cv;
+                        // Clean accidental double slashes inside the URL path (safeguard)
+                        a.href = fullCvUrl.replace(/([^:]\/)\/+/g, "$1");
+                        a.classList.remove('hidden'); 
+                    }
 
-                    // Process Entries
+                    // Process Individual Entry Elements
                     const entries = xmlDoc.getElementsByTagNameNS(ns, 'entry');
                     allCardsData = Array.from(entries).map(entry => {
                         const title = getTagText(entry, 'title');
                         const summary = getTagText(entry, 'summary');
                         
-                        // Parse Category tag attributes safely
+                        // Parse Category tag attributes with fallback routing
                         const catEl = entry.getElementsByTagNameNS(ns, 'category')[0];
                         const category = catEl ? catEl.getAttribute('term') : 'all';
 
@@ -99,19 +115,26 @@
                             const href = link.getAttribute('href');
                             const rel = link.getAttribute('rel');
 
-                            if (type === 'image/png' || type === 'image/jpeg') previewImgUrl = href;
-                            else if (rel === 'enclosure') {
+                            if (type === 'image/png' || type === 'image/jpeg') {
+                                previewImgUrl = href;
+                            } else if (rel === 'enclosure') {
                                 mainDocUrl = href;
                                 if (type === 'application/pdf') isPdf = true;
                             }
                         });
 
-                        if (!previewImgUrl) previewImgUrl = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';
+                        if (!previewImgUrl) {
+                            previewImgUrl = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';
+                        }
 
                         return { title, summary, category, mainDocUrl, previewImgUrl, isPdf };
                     });
 
-                    renderCards('all'); // Initial deployment pass showing all components
+                    renderCards('all'); // Initialize layout engine rendering all items
+                })
+                .catch(err => {
+                    console.error("Critical Runtime Stop:", err);
+                    document.getElementById('portfolio-title').textContent = "Pipeline Error Detected";
                 });
         });
 
@@ -142,10 +165,9 @@
             });
         }
 
-        // Contextual execution safely scoping event signals
         function filterCategory(e, cat) {
             renderCards(cat);
-            // Dynamic Active Styling Toggle
+            // Dynamic Active Styling Toggle Execution
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
                 btn.classList.add('bg-gray-800', 'text-gray-400', 'hover:bg-gray-700');
