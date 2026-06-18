@@ -21,7 +21,7 @@ item:
     file: /documents/github_certificate.pdf
     type: application/pdf
 
-  - title: Project
+  - title: Project -
     description: Built a custom data processing factory using Python and Docker to dynamically generate web-syndicated portfolios from structured text files.
     published: "2026-01-15T09:00:00Z"
     file: https://github.com/Eduardo-dlrf/Portfolio
