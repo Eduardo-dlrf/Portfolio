@@ -6,13 +6,13 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-      - name: Setuo Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       - name: Install Dependencies
         run: |
-          pyton -m pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install pyyaml
       - name: Run portfolio Generator
         run: python portfolio.py
