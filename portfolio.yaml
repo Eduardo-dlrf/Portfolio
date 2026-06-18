@@ -1,0 +1,28 @@
+title: Eduardo's Engineering & Automation Portfolio
+subtitle: Showcasing automotive optimization, continuous learning, and software automation
+author: Eduardo
+description: A digital log of my professional milestones, engineering achievements, and technical certifications.
+logo: /images/profile.jpg
+language: en-us
+category: Engineering
+link: https://eduardo-dlrf.github.io/Portfolio/
+
+
+item:
+  - title: Bachelor Thesis at BMW Group
+    description: Developed and implemented process optimization algorithms within the production plant, improving operational efficiency and data tracking.
+    published: "2026-01-15T09:00:00Z"
+    file: /documents/bmw_thesis_report.pdf
+    type: application/pdf
+
+  - title: Career Essentials in GitHub Professional Certificate
+    description: Completed advanced training on GitHub Actions, automation pipelines, and containerized workflows via LinkedIn Learning.
+    published: "2026-01-15T09:00:00Z"
+    file: /documents/github_certificate.pdf
+    type: application/pdf
+
+  - title: Automated Data Pipeline Project
+    description: Built a custom data processing factory using Python and Docker to dynamically generate web-syndicated portfolios from structured text files.
+    published: "2026-01-15T09:00:00Z"
+    file: https://github.com/Eduardo-dlrf/Portfolio
+    type: text/html
