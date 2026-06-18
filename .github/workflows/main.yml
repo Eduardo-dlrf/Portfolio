@@ -1,0 +1,25 @@
+name: Generate Portfolio Feed
+on: [push]
+jobs:
+  buid:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Setuo Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Dependencies
+        run: |
+          pyton -m pip install --upgrade pip
+          pip install pyyaml
+      - name: Run portfolio Generator
+        run: python portfolio.py
+      - name: Push Repo
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Modified Portfolio"
+          git push
