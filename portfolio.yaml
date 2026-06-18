@@ -25,8 +25,8 @@ item:
   - title: "HIL Test Bench for Power Management - International Motors Mexico"
     description: "Engineered a 4-channel isolated power board (12V/5A) using solid-state switching for automated ECU validation. Developed ESP32 firmware parsing standard VISA commands for real-time I2C telemetry and designed a multi-threaded Python/Tkinter GUI."
     published: "2025-02-15T18:00:00Z"
-    file: "/documents/hil_test_bench_specs.pdf"
-    type: "application/pdf"
+    file: "https://github.com/Eduardo-dlrf/International-Power-and-Grid-Management"
+    type: "text/html"
     preview_img: "/images/hil_test_bench.png"
 
   - title: "Autonomous Mobile Robotics - John Deere Advanced Control"
