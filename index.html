@@ -25,11 +25,11 @@
     </header>
 
     <nav class="max-w-6xl mx-auto px-4 mt-8 flex flex-wrap gap-2 justify-center md:justify-start">
-        <button onclick="filterCategory('all')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white cursor-pointer transition-all">All Fields</button>
-        <button onclick="filterCategory('experience')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Professional Experience</button>
-        <button onclick="filterCategory('projects')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Technical Projects</button>
-        <button onclick="filterCategory('certifications')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Certifications</button>
-        <button onclick="filterCategory('languages')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Languages & Immersion</button>
+        <button onclick="filterCategory(event, 'all')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white cursor-pointer transition-all">All Fields</button>
+        <button onclick="filterCategory(event, 'experience')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Professional Experience</button>
+        <button onclick="filterCategory(event, 'projects')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Technical Projects</button>
+        <button onclick="filterCategory(event, 'certifications')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Certifications</button>
+        <button onclick="filterCategory(event, 'languages')" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold bg-gray-800 text-gray-400 hover:bg-gray-700 cursor-pointer transition-all">Languages & Immersion</button>
     </nav>
 
     <main class="max-w-6xl mx-auto px-4 py-8">
@@ -85,7 +85,7 @@
                         const title = getTagText(entry, 'title');
                         const summary = getTagText(entry, 'summary');
                         
-                        // Parse Category
+                        // Parse Category tag attributes safely
                         const catEl = entry.getElementsByTagNameNS(ns, 'category')[0];
                         const category = catEl ? catEl.getAttribute('term') : 'all';
 
@@ -141,14 +141,15 @@
             });
         }
 
-        function filterCategory(cat) {
+        // Fixed parameter stack to prevent event scoping failure
+        function filterCategory(e, cat) {
             renderCards(cat);
             // Dynamic Active Styling Toggle
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
                 btn.classList.add('bg-gray-800', 'text-gray-400', 'hover:bg-gray-700');
             });
-            const activeBtn = event.currentTarget;
+            const activeBtn = e.currentTarget;
             activeBtn.classList.remove('bg-gray-800', 'text-gray-400', 'hover:bg-gray-700');
             activeBtn.classList.add('bg-blue-600', 'text-white');
         }
