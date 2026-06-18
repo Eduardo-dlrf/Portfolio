@@ -111,7 +111,7 @@
                         return { title, summary, category, mainDocUrl, previewImgUrl, isPdf };
                     });
 
-                    renderCards('all'); // Initial deployment pass
+                    renderCards('all'); // Initial deployment pass showing all components
                 });
         });
 
@@ -120,6 +120,7 @@
             container.innerHTML = '';
 
             allCardsData.forEach(c => {
+                // Safeguard evaluation: If filter scope is 'all', bypass exclusion limits
                 if (targetCategory !== 'all' && c.category !== targetCategory) return;
 
                 const html = `
@@ -141,7 +142,7 @@
             });
         }
 
-        // Fixed parameter stack to prevent event scoping failure
+        // Contextual execution safely scoping event signals
         function filterCategory(e, cat) {
             renderCards(cat);
             // Dynamic Active Styling Toggle
