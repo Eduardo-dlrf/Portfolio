@@ -1,10 +1,10 @@
 name: Generate Portfolio Feed
 on: [push]
 jobs:
-  buid:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Run Feed Generator
         uses: Eduardo-dlrf/portfolio-generator@main
