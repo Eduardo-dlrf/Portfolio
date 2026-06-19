@@ -22,9 +22,9 @@ item:
   - title: "BMW Group - Data Engineering & AI Integration Intern"
     description: "Automated big-data ETL pipelines in Python integrating LLM analytics via APIs to process quality records. Designed automated supplier performance dashboards utilized by a 15-engineer team and deployed a cloud web app integrating Google Fit API."
     published: "2025-09-01T09:00:00Z"
-    file: "/images/FIZ.jpeg"
-    type: "image/jpeg"
-    preview_img: "/images/BMW.jpeg"
+    file: "/images/FIZ.jpg"        
+    type: "image/jpeg"              
+    preview_img: "/images/BMW.jpg"  
     category: "experience"
 
   - title: "SAP Talent Recruiting Days - On-Site Day!"
@@ -108,7 +108,7 @@ item:
     category: "languages"
 
   - title: "French Language Experience - B1 Progression"
-    description: "Immersive linguistic and cultural engineering track in Nice, France, advancing capabilities up to independent B2 operation for cross-functional multi-continental teams."
+    description: "Immersive linguistic and cultural engineering track in Nice, France, advancing capabilities up to independent B1 operation for cross-functional multi-continental teams."
     published: "2025-08-01T12:00:00Z"
     file: "/documents/Constancia_Estudios_Eduardo de la Rosa Flores_signed.pdf"
     type: "text/html"
