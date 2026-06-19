@@ -72,7 +72,7 @@ item:
     published: "2022-06-14T09:00:00Z"
     file: "https://github.com/Eduardo-dlrf/Automotive-Infotainment-System"
     type: "text/html"
-    preview_img: "/images/infotainment_case.jpeg"
+    preview_img: "/images/infotainment_no_case.jpeg"
     category: "projects"
 
   - title: "Corporate IoT Health Dashboard & Google Fit API"
@@ -88,7 +88,7 @@ item:
     published: "2026-06-17T20:00:00Z"
     file: "https://www.linkedin.com/learning/certificates/ac4a1bf7fb351f30f5b02c375742852dddf7500bd9f81f494bc1e7554a88856e?u=76737724"
     type: "text/html"
-    preview_img: "/images/GitHub_Professional_Certificate.jpg"
+    preview_img: "/images/GitHub_Professional_Certificate.jpeg"
     category: "certifications"
 
   - title: "ABB Certification: Cobots for Material Handling"
@@ -104,7 +104,7 @@ item:
     published: "2026-02-01T12:00:00Z"
     file: "https://www.linkedin.com/in/eduardo-delarosa-flores/overlay/Certifications/1835301295/treasury/?profileId=ACoAADu_K-ABfjRtKnoWDU2jhMJckbpD-pM1NWE"
     type: "text/html"
-    preview_img: "/images/Logo_Goethe-Institut.png"
+    preview_img: "/images/Goethe.png"
     category: "languages"
 
   - title: "French Language Experience - B1 Progression"
